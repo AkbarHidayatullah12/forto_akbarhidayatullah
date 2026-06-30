@@ -72,9 +72,9 @@ export default function InteractiveTerminal() {
           response = [
             { text: "REKAM JEJAK PROYEK:", type: "info" },
             { text: "  1. Textile Hub (PBL Toko Usaha Muda Padang) [Backend Architect & Developer]", type: "text" },
-            { text: "     - Sistem informasi & e-catalog web, respons transaksi & stok dioptimalkan +35%.", type: "muted" },
+            { text: "     - Sistem informasi & e-catalog web, respons transaksi & stok dioptimalkan.", type: "muted" },
             { text: "  2. E-LOA (Surat Tugas Elektronik) [Full-Stack Developer]", type: "text" },
-            { text: "     - Sistem full-stack otomatisasi dokumen, memangkas durasi proses hingga 50%.", type: "muted" },
+            { text: "     - Sistem full-stack otomatisasi dokumen, memangkas durasi proses.", type: "muted" },
             { text: "  3. Firetech Hackathon Neo Telemetri UNAND 2025 [Juara 3]", type: "text" },
             { text: "     - Membangun purwarupa aplikasi andal dalam batas kompetisi 24 jam.", type: "muted" }
           ];

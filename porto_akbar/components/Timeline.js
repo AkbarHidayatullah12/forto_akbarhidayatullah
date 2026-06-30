@@ -33,7 +33,7 @@ export default function Timeline() {
       type: "work",
       title: "Magang Data Operasional",
       company: "PT Garuda Cyber Indonesia",
-      period: "2024",
+      period: "2021",
       desc: "Mengelola, memproses, dan memvalidasi data operasional internal perusahaan. Belajar mengimplementasikan struktur data praktis dan memahami alur kerja di industri teknologi secara langsung.",
       icon: Briefcase,
       skills: ["Data Management", "Operational Systems", "Workflow Optimization", "Enterprise Tools"],

@@ -82,7 +82,7 @@ export default function InteractiveTerminal() {
         case "stats":
           response = [
             { text: "PRESTASI & METRIK UTAMA:", type: "info" },
-            { text: "  • Indeks Prestasi Kumulatif (IPK): 3.50", type: "text" },
+            { text: "  • Indeks Prestasi Kumulatif (IPK): 3.47", type: "text" },
             { text: "  • PBL API Response Optimization: +35% kecepatan respons", type: "text" },
             { text: "  • E-LOA Document Processing Cut: -50% pemangkasan durasi", type: "text" },
             { text: "  • Hackathon Firetech 2025: Juara 3 Regional", type: "text" }

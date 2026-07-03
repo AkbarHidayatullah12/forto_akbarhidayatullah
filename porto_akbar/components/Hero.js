@@ -180,7 +180,7 @@ export default function Hero({ activeMode }) {
               className="text-slate-400 text-base sm:text-lg max-w-2xl mb-8 leading-relaxed"
             >
               {activeMode === "developer" ? (
-                "Mahasiswa semester 6 Teknologi Rekayasa Perangkat Lunak di Politeknik Negeri Padang dengan IPK 3,50. Berdedikasi merancang arsitektur backend optimal dan sistem full-stack mutakhir yang menyederhanakan data kompleks."
+                "Mahasiswa semester 6 Teknologi Rekayasa Perangkat Lunak di Politeknik Negeri Padang dengan IPK 3,47. Berdedikasi merancang arsitektur backend optimal dan sistem full-stack mutakhir yang menyederhanakan data kompleks."
               ) : (
                 "Seorang komunikator visual yang mahir memadukan keahlian fotografi, sinematografi, editing video, dan desain grafis. Dipercaya memimpin tim kreatif sebagai Kepala Bidang Kominfo HMTI PNP dan aktif dalam pengembangan ekosistem kreatif regional."
               )}
@@ -262,7 +262,7 @@ export default function Hero({ activeMode }) {
                         <Award className="h-3.5 w-3.5 text-brand-purple" />
                         IPK Akademik
                       </span>
-                      <h3 className="text-3xl font-extrabold text-white">3.50</h3>
+                      <h3 className="text-3xl font-extrabold text-white">3.47</h3>
                       <span className="text-[10px] text-green-400 font-medium">Semester 6 (TRPL)</span>
                     </div>
 

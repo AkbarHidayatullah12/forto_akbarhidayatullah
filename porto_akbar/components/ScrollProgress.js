@@ -5,6 +5,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { useSuitTheme, suitThemes } from "./ThemeContext";
 
 export default function ScrollProgress() {
+  const [mounted, setMounted] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -18,10 +19,14 @@ export default function ScrollProgress() {
   const themeColor = currentSuit.color;
 
   useEffect(() => {
-    return scrollYProgress.onChange((latest) => {
+    setMounted(true);
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
       setPercentage(Math.round(latest * 100));
     });
+    return () => unsubscribe();
   }, [scrollYProgress]);
+
+  if (!mounted) return null;
 
   return (
     <div className="fixed top-[72px] left-0 right-0 z-40 pointer-events-none h-1.5 bg-black/40">

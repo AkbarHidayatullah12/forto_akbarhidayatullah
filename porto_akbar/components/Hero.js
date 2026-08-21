@@ -27,17 +27,22 @@ function useCountUp(target, duration = 1.5, startCounting = false) {
 }
 
 export default function Hero() {
+  const [mounted, setMounted] = useState(false);
   const [typedText, setTypedText] = useState("");
   const { suitTheme } = useSuitTheme();
   const currentSuit = suitThemes.find((t) => t.id === suitTheme) || suitThemes[0];
   const themeColor = currentSuit.color;
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Metric counter refs
   const metricsRef = useRef(null);
   const metricsInView = useInView(metricsRef, { once: true, margin: "-100px" });
-  const count35 = useCountUp(35, 1.2, metricsInView);
-  const count50 = useCountUp(50, 1.2, metricsInView);
-  const count3 = useCountUp(3, 0.8, metricsInView);
+  const count35 = useCountUp(35, 1.2, mounted && metricsInView);
+  const count50 = useCountUp(50, 1.2, mounted && metricsInView);
+  const count3 = useCountUp(3, 0.8, mounted && metricsInView);
 
   const devRoles = [
     "Full-Stack Developer",
@@ -297,6 +302,7 @@ export default function Hero() {
                   <Gauge className="h-5 w-5" />
                 </div>
                 <span
+                  suppressHydrationWarning
                   className="font-tech text-xs font-bold px-2.5 py-1 border rounded transition-colors duration-300"
                   style={{ color: themeColor, backgroundColor: `${themeColor}15`, borderColor: `${themeColor}40` }}
                 >
@@ -328,6 +334,7 @@ export default function Hero() {
                   <Layers className="h-5 w-5" />
                 </div>
                 <span
+                  suppressHydrationWarning
                   className="font-tech text-xs font-bold px-2.5 py-1 border rounded transition-colors duration-300"
                   style={{ color: themeColor, backgroundColor: `${themeColor}15`, borderColor: `${themeColor}40` }}
                 >
@@ -355,7 +362,10 @@ export default function Hero() {
                 <div className="h-10 w-10 rounded-lg bg-[#0b1329] border border-[#1d2847] flex items-center justify-center text-yellow-400">
                   <Award className="h-5 w-5" />
                 </div>
-                <span className="font-tech text-xs font-bold text-yellow-400 bg-yellow-400/15 px-2.5 py-1 border border-yellow-400/40 rounded">
+                <span
+                  suppressHydrationWarning
+                  className="font-tech text-xs font-bold text-yellow-400 bg-yellow-400/15 px-2.5 py-1 border border-yellow-400/40 rounded"
+                >
                   JUARA {count3}
                 </span>
               </div>

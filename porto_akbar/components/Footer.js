@@ -31,7 +31,7 @@ export default function Footer() {
                 AKBAR HIDAYATULLAH
               </span>
             </div>
-            <p className="font-tech text-xs text-slate-400">
+            <p className="font-tech text-xs text-slate-400" suppressHydrationWarning>
               &copy; {new Date().getFullYear()} Akbar Hidayatullah. All Rights Reserved.
             </p>
           </div>

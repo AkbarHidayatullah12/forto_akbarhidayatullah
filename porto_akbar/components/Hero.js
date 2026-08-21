@@ -1,17 +1,55 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Camera, FileText, Send, Award, Cpu, Eye, Users } from "lucide-react";
-import { useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { Rocket, Gauge, Layers, Award, Terminal, Send, Activity, Wifi } from "lucide-react";
+import { useSuitTheme, suitThemes } from "./ThemeContext";
 
-export default function Hero({ activeMode }) {
+// Animated count-up hook
+function useCountUp(target, duration = 1.5, startCounting = false) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!startCounting) return;
+    let start = 0;
+    const increment = target / (duration * 60);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 1000 / 60);
+    return () => clearInterval(timer);
+  }, [target, duration, startCounting]);
+  return count;
+}
+
+export default function Hero() {
   const [typedText, setTypedText] = useState("");
-  const devRoles = ["Full-Stack Developer", "TRPL Student at Politeknik Negeri Padang", "Backend Architect", "Hackathon Winner"];
+  const { suitTheme } = useSuitTheme();
+  const currentSuit = suitThemes.find((t) => t.id === suitTheme) || suitThemes[0];
+  const themeColor = currentSuit.color;
+
+  // Metric counter refs
+  const metricsRef = useRef(null);
+  const metricsInView = useInView(metricsRef, { once: true, margin: "-100px" });
+  const count35 = useCountUp(35, 1.2, metricsInView);
+  const count50 = useCountUp(50, 1.2, metricsInView);
+  const count3 = useCountUp(3, 0.8, metricsInView);
+
+  const devRoles = [
+    "Full-Stack Developer",
+    "Mahasiswa TRPL Politeknik Negeri Padang",
+    "Backend Architect",
+    "Juara 3 Firetech Hackathon 2025",
+    "Creative Visual Director",
+  ];
   const [roleIdx, setRoleIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Typewriter effect
   useEffect(() => {
     const currentRole = devRoles[roleIdx];
     let timer;
@@ -19,12 +57,12 @@ export default function Hero({ activeMode }) {
       timer = setTimeout(() => {
         setTypedText(currentRole.substring(0, charIdx - 1));
         setCharIdx((prev) => prev - 1);
-      }, 50);
+      }, 40);
     } else {
       timer = setTimeout(() => {
         setTypedText(currentRole.substring(0, charIdx + 1));
         setCharIdx((prev) => prev + 1);
-      }, 100);
+      }, 80);
     }
 
     if (!isDeleting && charIdx === currentRole.length) {
@@ -38,314 +76,296 @@ export default function Hero({ activeMode }) {
   }, [charIdx, isDeleting, roleIdx]);
 
   return (
-    <section className="relative overflow-hidden pt-12 pb-20 md:py-32">
-      {/* Background decoration */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
-          {activeMode === "developer" ? (
-            <motion.div
-              key="dev-bg"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 grid-bg-dense opacity-30"
-            />
-          ) : (
-            <motion.div
-              key="creative-bg"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(83,52,131,0.15),transparent_60%)]"
-            />
-          )}
-        </AnimatePresence>
-      </div>
+    <section id="about" className="relative pt-32 pb-20 overflow-hidden">
+      {/* Background grid — subtle, not noisy */}
+      <div className="absolute inset-0 z-0 web-pattern-bg opacity-20 pointer-events-none" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Single ambient glow — restrained */}
+      <div
+        className="absolute top-1/3 right-10 w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-15 transition-colors duration-500"
+        style={{ backgroundColor: themeColor }}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 space-y-24">
+        {/* Split Screen Hero */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Main Info */}
-          <div className="lg:col-span-7 flex flex-col items-center text-center lg:items-start lg:text-left">
-            {/* Profile Avatar & CV Link */}
-            <div className="flex flex-row items-center gap-6 mb-6">
-              {/* Profile Avatar */}
+          {/* Left Column — Clean & Focused */}
+          <div className="lg:col-span-7 space-y-6 text-left">
+            {/* Compact Identity Bar */}
+            <div className="flex items-center gap-4">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className={`relative h-28 w-28 rounded-2xl overflow-hidden border-2 ${activeMode === "developer" ? "border-brand-purple glow-purple-sm" : "border-brand-cyan glow-cyan-sm"
-                  } shadow-2xl transition-all duration-300`}
+                style={{ borderColor: themeColor }}
+                className="relative h-16 w-16 border-2 rounded-lg overflow-hidden shrink-0"
               >
                 <img
                   src="/abar%20biru.jpg"
                   alt="Akbar Hidayatullah"
-                  className="h-full w-full object-cover object-top hover:scale-[1.05] transition-transform duration-500"
+                  className="h-full w-full object-cover object-top"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-black/40 to-transparent" />
               </motion.div>
 
-              {/* CV Download / View Button */}
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex flex-col items-start gap-1.5"
-              >
-                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Curriculum Vitae</span>
-                <a
-                  href="/CV_Akbar_Hidayatullah_Indonesia.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold text-white transition-all duration-300 border ${activeMode === "developer"
-                      ? "bg-brand-purple/10 border-brand-purple/30 hover:bg-brand-purple/35 hover:border-brand-purple glow-purple-sm"
-                      : "bg-brand-cyan/10 border-brand-cyan/30 hover:bg-brand-cyan/35 hover:border-brand-cyan glow-cyan-sm"
-                    }`}
-                >
-                  <FileText className="h-4 w-4" />
-                  Lihat / Unduh CV
-                </a>
-              </motion.div>
+              <div>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span className="flex items-center gap-1 text-emerald-400 font-tech text-[11px] font-bold">
+                    <Wifi className="h-3 w-3" /> ONLINE
+                  </span>
+                  <span className="text-slate-500 text-[10px]">•</span>
+                  <span className="font-tech text-[11px] text-slate-400">IPK 3.47 // TRPL PNP</span>
+                </div>
+                <h2 className="font-tech text-xs sm:text-sm font-bold tracking-widest text-slate-400 uppercase">
+                  HALO, SAYA AKBAR HIDAYATULLAH
+                </h2>
+              </div>
             </div>
 
-            {/* Tagline */}
+            {/* Bold Headline — Breathing Room */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-navy border border-white/10 text-xs font-semibold text-brand-purple-light mb-6 uppercase tracking-wider"
-            >
-              {activeMode === "developer" ? (
-                <>
-                  <Cpu className="h-3.5 w-3.5 text-brand-purple" />
-                  Engineering & Logic
-                </>
-              ) : (
-                <>
-                  <Camera className="h-3.5 w-3.5 text-brand-purple" />
-                  Visual & Creativity
-                </>
-              )}
-            </motion.div>
-
-            {/* Name */}
-            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-4"
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="space-y-1"
             >
-              Akbar Hidayatullah
-            </motion.h1>
+              <h1 className="font-anybody text-4xl sm:text-6xl lg:text-7xl font-black italic tracking-tight text-white leading-[0.92] uppercase drop-shadow-md">
+                WITH GREAT CODE
+              </h1>
+              <h1
+                className="font-anybody text-4xl sm:text-6xl lg:text-7xl font-black italic tracking-tight glow-red leading-[0.92] uppercase transition-colors duration-300"
+                style={{ color: themeColor, textShadow: `0 0 20px ${themeColor}aa` }}
+              >
+                COMES GREAT CREATIVITY
+              </h1>
+            </motion.div>
 
-            {/* Subtitles & Switchable description */}
-            <div className="h-16 mb-4">
-              <AnimatePresence mode="wait">
-                {activeMode === "developer" ? (
-                  <motion.div
-                    key="dev-title"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="font-mono text-lg sm:text-2xl font-bold text-slate-300"
-                  >
-                    <span>I build digital solutions as a </span>
-                    <span className="text-brand-purple glow-purple underline decoration-brand-blue/50 underline-offset-4">
-                      {typedText}
-                    </span>
-                    <span className="animate-pulse">|</span>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="creative-title"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="text-lg sm:text-2xl font-bold text-slate-300"
-                  >
-                    Mengekspresikan Cerita Melalui{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-cyan font-extrabold">
-                      Fotografi & Videografi
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            {/* Typewriter Role Bar */}
+            <div
+              className="spider-glass px-4 py-2.5 border-l-4 border-white/10 flex items-center gap-2 max-w-xl transition-all duration-300"
+              style={{ borderLeftColor: themeColor }}
+            >
+              <Activity className="h-4 w-4 shrink-0" style={{ color: themeColor }} />
+              <div className="font-tech text-xs sm:text-sm font-bold text-slate-200 truncate">
+                <span style={{ color: themeColor }}>{typedText}</span>
+                <span className="animate-pulse" style={{ color: themeColor }}>_</span>
+              </div>
             </div>
 
-            {/* Main bio blurb */}
+            {/* Bio — Concise */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-slate-400 text-base sm:text-lg max-w-2xl mb-8 leading-relaxed"
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed font-sans"
             >
-              {activeMode === "developer" ? (
-                "Mahasiswa semester 6 Teknologi Rekayasa Perangkat Lunak di Politeknik Negeri Padang dengan IPK 3,47. Berdedikasi merancang arsitektur backend optimal dan sistem full-stack mutakhir yang menyederhanakan data kompleks."
-              ) : (
-                "Seorang komunikator visual yang mahir memadukan keahlian fotografi, sinematografi, editing video, dan desain grafis. Dipercaya memimpin tim kreatif sebagai Kepala Bidang Kominfo HMTI PNP dan aktif dalam pengembangan ekosistem kreatif regional."
-              )}
+              Mahasiswa semester 7 Teknologi Rekayasa Perangkat Lunak di Politeknik Negeri Padang dengan IPK 3,47. Berdedikasi merancang arsitektur backend optimal, sistem web & mobile full-stack mutakhir, serta memadukan logika rekayasa perangkat lunak dengan keahlian fotografi & komunikasi visual.
             </motion.p>
 
-            {/* CTAs */}
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-wrap gap-4 pt-2"
             >
-              {activeMode === "developer" ? (
-                <>
-                  <a
-                    href="#terminal"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-purple px-6 py-3.5 text-sm font-semibold text-white hover:bg-brand-purple/90 transition-all duration-300 neon-border-purple shadow-lg"
-                  >
-                    <Terminal className="h-4.5 w-4.5" />
-                    Buka Terminal CLI
-                  </a>
-                  <a
-                    href="#projects"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-navy border border-white/10 px-6 py-3.5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-brand-blue/30 transition-all duration-300"
-                  >
-                    <FileText className="h-4.5 w-4.5" />
-                    Lihat Proyek
-                  </a>
-                </>
-              ) : (
-                <>
-                  <a
-                    href="#gallery"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-purple to-brand-blue px-6 py-3.5 text-sm font-semibold text-white hover:opacity-95 transition-all duration-300 neon-border-purple"
-                  >
-                    <Eye className="h-4.5 w-4.5" />
-                    Eksplorasi Galeri
-                  </a>
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-navy border border-white/10 px-6 py-3.5 text-sm font-semibold text-slate-300 hover:text-white hover:bg-brand-blue/30 transition-all duration-300"
-                  >
-                    <Send className="h-4.5 w-4.5" />
-                    Hubungi Saya
-                  </a>
-                </>
-              )}
+              <a
+                href="#projects"
+                className="btn-spider-primary inline-flex items-center gap-2.5 px-7 py-3.5 text-xs tracking-wider font-extrabold relative group"
+              >
+                <div className="web-corner-tl" />
+                <div className="web-corner-br" />
+                LIHAT PROYEK
+                <Rocket className="h-4 w-4" />
+              </a>
+              <a
+                href="#terminal"
+                className="btn-spider-outline inline-flex items-center gap-2 px-6 py-3.5 text-xs tracking-wider relative group"
+              >
+                <div className="web-corner-tl" />
+                <div className="web-corner-br" />
+                <Terminal className="h-4 w-4" style={{ color: themeColor }} />
+                TERMINAL CLI
+              </a>
+              <a
+                href="#contact"
+                className="btn-spider-outline inline-flex items-center gap-2 px-6 py-3.5 text-xs tracking-wider relative group"
+              >
+                <div className="web-corner-tl" />
+                <div className="web-corner-br" />
+                <Send className="h-4 w-4" style={{ color: themeColor }} />
+                HUBUNGI SAYA
+              </a>
             </motion.div>
           </div>
 
-          {/* Graphical/Stats Element */}
-          <div className="lg:col-span-5 flex justify-center w-full">
-            <AnimatePresence mode="wait">
-              {activeMode === "developer" ? (
-                <motion.div
-                  key="dev-graphics"
-                  initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, rotate: 2 }}
-                  transition={{ duration: 0.4 }}
-                  className="w-full max-w-md bg-brand-dark/85 backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden neon-border-blue"
+          {/* Right Column — Clean Circular HUD */}
+          <div className="lg:col-span-5 flex justify-center items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="relative w-72 h-72 sm:w-96 sm:h-96 flex items-center justify-center"
+            >
+              {/* Outer Ring */}
+              <div
+                className="absolute inset-0 rounded-full border-3 animate-spider-pulse transition-colors duration-500"
+                style={{ borderColor: themeColor, boxShadow: `0 0 30px ${themeColor}66` }}
+              />
+              <div
+                className="absolute inset-4 rounded-full border border-dashed animate-radar transition-colors duration-500"
+                style={{ borderColor: `${themeColor}55` }}
+              />
+
+              {/* Minimal Tick Marks — only top & bottom */}
+              <div
+                className="absolute -top-3 left-1/2 -translate-x-1/2 font-tech text-[10px] font-bold bg-[#0d0f10] px-2 border transition-colors duration-300"
+                style={{ color: themeColor, borderColor: `${themeColor}44` }}
+              >
+                IPK: 3.47 // TRPL
+              </div>
+              <div
+                className="absolute -bottom-3 left-1/2 -translate-x-1/2 font-tech text-[10px] font-bold bg-[#0d0f10] px-2 border transition-colors duration-300"
+                style={{ color: themeColor, borderColor: `${themeColor}44` }}
+              >
+                POLITEKNIK NEGERI PADANG
+              </div>
+
+              {/* Center Emblem — Clean */}
+              <div className="w-full h-full rounded-full flex flex-col items-center justify-center p-6 relative group">
+                <div className="w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
+                  <img
+                    src="/logo%20spider.png"
+                    alt="Spider Emblem"
+                    className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-110"
+                    style={{ filter: `drop-shadow(0 0 25px ${themeColor})` }}
+                  />
+                </div>
+                <span
+                  className="font-tech text-xs sm:text-sm font-bold tracking-widest uppercase mt-2 transition-colors duration-300"
+                  style={{ color: themeColor }}
                 >
-                  <div className="absolute top-0 right-0 h-40 w-40 bg-brand-blue/10 rounded-full blur-3xl pointer-events-none" />
+                  AKBAR HIDAYATULLAH
+                </span>
+                <span className="font-tech text-[10px] text-slate-400 tracking-wider">
+                  FULL-STACK & CREATIVE
+                </span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
 
-                  {/* Window bar */}
-                  <div className="flex items-center justify-between pb-6 border-b border-white/5 mb-6">
-                    <div className="flex gap-1.5">
-                      <span className="h-3.5 w-3.5 rounded-full bg-red-500/80" />
-                      <span className="h-3.5 w-3.5 rounded-full bg-yellow-500/80" />
-                      <span className="h-3.5 w-3.5 rounded-full bg-green-500/80" />
-                    </div>
-                    <span className="text-xs font-mono text-slate-500">profile_metrics.json</span>
-                  </div>
+        {/* Divider */}
+        <div className="relative flex items-center justify-center">
+          <div
+            className="w-full h-[1px]"
+            style={{ backgroundImage: `linear-gradient(to right, transparent, ${themeColor}66, transparent)` }}
+          />
+          <div
+            className="absolute h-3 w-3 bg-[#0d0f10] border-2 rotate-45"
+            style={{ borderColor: themeColor }}
+          />
+        </div>
 
-                  {/* Core Stats Grid */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-brand-navy/55 border border-white/5 rounded-xl p-4 flex flex-col justify-between h-28">
-                      <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-                        <Award className="h-3.5 w-3.5 text-brand-purple" />
-                        IPK Akademik
-                      </span>
-                      <h3 className="text-3xl font-extrabold text-white">3.47</h3>
-                      <span className="text-[10px] text-green-400 font-medium">Semester 6 (TRPL)</span>
-                    </div>
+        {/* Spider-Sense Metrics — Cleaner */}
+        <div className="space-y-10 text-center">
+          <div className="space-y-2">
+            <div
+              className="font-tech text-xs font-bold tracking-widest uppercase transition-colors duration-300"
+              style={{ color: themeColor }}
+            >
+              [ SPIDER-SENSE // METRIK UTAMA ]
+            </div>
+            <h2 className="font-anybody text-3xl sm:text-4xl font-black italic tracking-wide text-white uppercase">
+              METRIK DAMPAK & PERFORMA
+            </h2>
+          </div>
 
-                    <div className="bg-brand-navy/55 border border-white/5 rounded-xl p-4 flex flex-col justify-between h-28">
-                      <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-                        <Cpu className="h-3.5 w-3.5 text-brand-cyan" />
-                        E-LOA System
-                      </span>
-                      <h3 className="text-3xl font-extrabold text-white">-50%</h3>
-                      <span className="text-[10px] text-slate-400 font-medium">Pangkas Durasi Proses</span>
-                    </div>
-
-                    <div className="bg-brand-navy/55 border border-white/5 rounded-xl p-4 flex flex-col justify-between h-28">
-                      <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-                        <Terminal className="h-3.5 w-3.5 text-brand-purple-light" />
-                        PBL Platform
-                      </span>
-                      <h3 className="text-3xl font-extrabold text-white">+35%</h3>
-                      <span className="text-[10px] text-emerald-400 font-medium">Responsivitas API</span>
-                    </div>
-
-                    <div className="bg-brand-navy/55 border border-white/5 rounded-xl p-4 flex flex-col justify-between h-28">
-                      <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-                        <Award className="h-3.5 w-3.5 text-yellow-500" />
-                        Hackathon Unand
-                      </span>
-                      <h3 className="text-3xl font-extrabold text-white">Juara 3</h3>
-                      <span className="text-[10px] text-yellow-400 font-medium">Neo Telemetri 2025</span>
-                    </div>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="creative-graphics"
-                  initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, rotate: -2 }}
-                  transition={{ duration: 0.4 }}
-                  className="w-full max-w-md bg-brand-dark/85 backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden neon-border-purple"
+          <div ref={metricsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            {/* Card 1 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0 }}
+              whileHover={{ y: -4 }}
+              className="metallic-blue-card p-6 space-y-4 rounded-xl"
+            >
+              <div className="flex items-center justify-between">
+                <div
+                  className="h-10 w-10 rounded-lg bg-[#0b1329] border border-[#1d2847] flex items-center justify-center"
+                  style={{ color: themeColor }}
                 >
-                  <div className="absolute top-0 left-0 h-40 w-40 bg-brand-purple/10 rounded-full blur-3xl pointer-events-none" />
+                  <Gauge className="h-5 w-5" />
+                </div>
+                <span
+                  className="font-tech text-xs font-bold px-2.5 py-1 border rounded transition-colors duration-300"
+                  style={{ color: themeColor, backgroundColor: `${themeColor}15`, borderColor: `${themeColor}40` }}
+                >
+                  +{count35}% SPEEDUP
+                </span>
+              </div>
+              <h3 className="font-anybody text-lg font-bold italic text-white">
+                Optimalisasi API (PBL)
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                Mengoptimalkan waktu respons transaksi e-catalog Toko Usaha Muda Padang menggunakan Next.js & REST API MySQL.
+              </p>
+            </motion.div>
 
-                  {/* Decorative Elements */}
-                  <div className="flex items-center justify-between pb-6 border-b border-white/5 mb-6">
-                    <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">Creative Roles</span>
-                    <span className="text-xs text-brand-purple font-semibold">Visual Portfolio</span>
-                  </div>
+            {/* Card 2 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.15 }}
+              whileHover={{ y: -4 }}
+              className="metallic-blue-card p-6 space-y-4 rounded-xl"
+            >
+              <div className="flex items-center justify-between">
+                <div
+                  className="h-10 w-10 rounded-lg bg-[#0b1329] border border-[#1d2847] flex items-center justify-center"
+                  style={{ color: themeColor }}
+                >
+                  <Layers className="h-5 w-5" />
+                </div>
+                <span
+                  className="font-tech text-xs font-bold px-2.5 py-1 border rounded transition-colors duration-300"
+                  style={{ color: themeColor, backgroundColor: `${themeColor}15`, borderColor: `${themeColor}40` }}
+                >
+                  -{count50}% DURASI
+                </span>
+              </div>
+              <h3 className="font-anybody text-lg font-bold italic text-white">
+                Efisiensi Sistem E-LOA
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                Memangkas durasi alur kerja dokumen melalui otomatisasi workflow Laravel dan validasi PostgreSQL.
+              </p>
+            </motion.div>
 
-                  {/* Creative Roles Showcase */}
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4 bg-brand-navy/40 border border-white/5 rounded-xl p-3.5 hover:border-brand-purple/40 transition-colors duration-300">
-                      <div className="h-10 w-10 rounded-lg bg-brand-purple/20 flex items-center justify-center border border-brand-purple/30">
-                        <Camera className="h-5 w-5 text-brand-purple" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="text-sm font-bold text-white">Fotografi & Videografi</h4>
-                        <p className="text-xs text-slate-400">Komunikasi visual, landscape, event & cinematic cuts</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4 bg-brand-navy/40 border border-white/5 rounded-xl p-3.5 hover:border-brand-purple/40 transition-colors duration-300">
-                      <div className="h-10 w-10 rounded-lg bg-brand-blue/20 flex items-center justify-center border border-brand-blue/30">
-                        <Users className="h-5 w-5 text-brand-cyan" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="text-sm font-bold text-white">Kepemimpinan Organisasi</h4>
-                        <p className="text-xs text-slate-400">Kepala Bidang Kominfo HMTI PNP & Medkraf HIVE Sumbar</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4 bg-brand-navy/40 border border-white/5 rounded-xl p-3.5 hover:border-brand-purple/40 transition-colors duration-300">
-                      <div className="h-10 w-10 rounded-lg bg-brand-purple-light/20 flex items-center justify-center border border-brand-purple-light/30">
-                        <Award className="h-5 w-5 text-brand-purple-light" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="text-sm font-bold text-white">Komitmen Sosial</h4>
-                        <p className="text-xs text-slate-400">Relawan Kebencanaan & Kontributor Media Komunitas</p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Card 3 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              whileHover={{ y: -4 }}
+              className="metallic-blue-card p-6 space-y-4 rounded-xl"
+            >
+              <div className="flex items-center justify-between">
+                <div className="h-10 w-10 rounded-lg bg-[#0b1329] border border-[#1d2847] flex items-center justify-center text-yellow-400">
+                  <Award className="h-5 w-5" />
+                </div>
+                <span className="font-tech text-xs font-bold text-yellow-400 bg-yellow-400/15 px-2.5 py-1 border border-yellow-400/40 rounded">
+                  JUARA {count3}
+                </span>
+              </div>
+              <h3 className="font-anybody text-lg font-bold italic text-white">
+                Firetech Hackathon 2025
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                Merancang purwarupa aplikasi tanggap darurat dalam batas waktu 24 jam di Universitas Andalas.
+              </p>
+            </motion.div>
           </div>
         </div>
       </div>

@@ -1,30 +1,27 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Terminal as TerminalIcon, Sparkles } from "lucide-react";
+import { Terminal as TerminalIcon, ShieldAlert } from "lucide-react";
+import { playHudBeep } from "../utils/soundEffects";
+import { useSuitTheme, suitThemes } from "./ThemeContext";
 
 export default function InteractiveTerminal() {
   const [history, setHistory] = useState([
-    { text: "AkbarOS v1.0.0 (Type 'help' to see available commands)", type: "system" },
-    { text: "Log masuk berhasil...", type: "system" },
-    { text: "Masukkan perintah di bawah:", type: "info" }
+    { text: "AkbarOS v2.0 // SPIDER-TERMINAL [ONLINE]", type: "system" },
+    { text: "Ketik 'help' untuk melihat daftar perintah yang tersedia.", type: "info" }
   ]);
   const [input, setInput] = useState("");
   const terminalEndRef = useRef(null);
   const inputRef = useRef(null);
   const isUserCommand = useRef(false);
 
+  const { suitTheme } = useSuitTheme();
+  const currentSuit = suitThemes.find((t) => t.id === suitTheme) || suitThemes[0];
+  const themeColor = currentSuit.color;
+
   const focusInput = () => {
     if (inputRef.current) inputRef.current.focus();
   };
-
-  useEffect(() => {
-    setHistory([
-      { text: "AkbarOS v1.0.0 (Type 'help' to see available commands)", type: "system" },
-      { text: "Log masuk berhasil pada " + new Date().toLocaleString("id-ID"), type: "system" },
-      { text: "Masukkan perintah di bawah:", type: "info" }
-    ]);
-  }, []);
 
   useEffect(() => {
     if (isUserCommand.current && terminalEndRef.current) {
@@ -36,65 +33,78 @@ export default function InteractiveTerminal() {
   const handleCommand = (e) => {
     if (e.key === "Enter") {
       isUserCommand.current = true;
+      playHudBeep(1100);
       const trimmedInput = input.trim().toLowerCase();
       let response = [];
 
       switch (trimmedInput) {
         case "help":
           response = [
-            { text: "Perintah yang tersedia:", type: "info" },
-            { text: "  about    - Ringkasan profil Akbar Hidayatullah", type: "text" },
-            { text: "  skills   - Daftar keahlian teknis & framework", type: "text" },
-            { text: "  projects - Informasi proyek PBL & E-LOA", type: "text" },
-            { text: "  stats    - Prestasi akademik & metrik optimasi", type: "text" },
-            { text: "  contact  - Info kontak & media sosial", type: "text" },
+            { text: "DAFTAR PERINTAH TERMINAL:", type: "info" },
+            { text: "  about    - Ringkasan profil & biodata Akbar Hidayatullah", type: "text" },
+            { text: "  skills   - Daftar keahlian pemrograman & framework", type: "text" },
+            { text: "  projects - Informasi proyek unggulan PBL & E-LOA", type: "text" },
+            { text: "  stats    - Prestasi akademik & metrik optimasi sistem", type: "text" },
+            { text: "  contact  - Info kontak email & media sosial", type: "text" },
+            { text: "  game     - [EASTER EGG] Buka Stark Combat Training Simulator", type: "highlight" },
             { text: "  clear    - Bersihkan layar terminal", type: "text" }
           ];
           break;
         case "about":
           response = [
-            { text: "NAMA: Akbar Hidayatullah", type: "info" },
-            { text: "POSISI: Full-Stack Developer & Creative Visual Director", type: "text" },
-            { text: "PENDIDIKAN: Semester 6 D4 Teknologi Rekayasa Perangkat Lunak, Politeknik Negeri Padang", type: "text" },
-            { text: "FOKUS: Pengembangan sistem backend efisien, interaksi full-stack modern, serta penggabungan logika programming dengan komunikasi visual kreatif.", type: "text" }
+            { text: "BIODATA OPERATIF:", type: "info" },
+            { text: "  Nama: Akbar Hidayatullah", type: "text" },
+            { text: "  Posisi: Full-Stack Developer & Creative Visual Director", type: "text" },
+            { text: "  Pendidikan: Mahasiswa Semester 7 D4 TRPL Politeknik Negeri Padang (IPK 3,47)", type: "text" },
+            { text: "  Dedikasi: Merancang sistem backend efisien, aplikasi full-stack modern, serta memadukan logika software dengan komunikasi visual.", type: "text" }
           ];
           break;
         case "skills":
           response = [
-            { text: "KEAHLIAN TEKNIS:", type: "info" },
-            { text: "  Bahasa: PHP, Java, JavaScript, Dart", type: "text" },
-            { text: "  Framework: Laravel, Next.js, Express.js, Flutter", type: "text" },
-            { text: "  Database: MySQL, PostgreSQL", type: "text" },
-            { text: "  Metodologi: REST API, Agile/Scrum, Git Workflows", type: "text" }
+            { text: "KEAHLIAN TEKNOLOGI:", type: "info" },
+            { text: "  • Bahasa: JavaScript, PHP, Dart, Java, HTML/CSS", type: "text" },
+            { text: "  • Framework Web: Next.js, React, Laravel, Express.js", type: "text" },
+            { text: "  • Mobile & Multiplatform: Flutter", type: "text" },
+            { text: "  • Database: MySQL, PostgreSQL", type: "text" },
+            { text: "  • Creative Tools: Adobe Premiere Pro, Lightroom, Photoshop, DaVinci Resolve", type: "text" }
           ];
           break;
         case "projects":
           response = [
-            { text: "REKAM JEJAK PROYEK:", type: "info" },
-            { text: "  1. Textile Hub (PBL Toko Usaha Muda Padang) [Backend Architect & Developer]", type: "text" },
-            { text: "     - Sistem informasi & e-catalog web, respons transaksi & stok dioptimalkan.", type: "muted" },
-            { text: "  2. E-LOA (Surat Tugas Elektronik) [Full-Stack Developer]", type: "text" },
-            { text: "     - Sistem full-stack otomatisasi dokumen, memangkas durasi proses.", type: "muted" },
-            { text: "  3. Firetech Hackathon Neo Telemetri UNAND 2025 [Juara 3]", type: "text" },
-            { text: "     - Membangun purwarupa aplikasi andal dalam batas kompetisi 24 jam.", type: "muted" }
+            { text: "BERKAS PROYEK UNGGULAN:", type: "info" },
+            { text: "  1. Textile Hub (PBL Toko Usaha Muda) -> Next.js, Express, MySQL (+35% speedup)", type: "text" },
+            { text: "  2. E-LOA (Surat Tugas Elektronik) -> Laravel, PostgreSQL (-50% durasi proses)", type: "text" },
+            { text: "  3. Neo Telemetri Hackathon 2025 -> Juara 3 Winner Project", type: "text" },
+            { text: "  4. Kominfo HMTI & Medkraf HIVE Sumbar -> Manajemen Media & Konten Visual", type: "text" },
+            { text: "  Tip: Scroll ke bagian atas atau ketik nama proyek untuk intel lebih dalam.", type: "system" }
           ];
           break;
         case "stats":
           response = [
-            { text: "PRESTASI & METRIK UTAMA:", type: "info" },
-            { text: "  • Indeks Prestasi Kumulatif (IPK): 3.47", type: "text" },
-            { text: "  • PBL API Response Optimization: +35% kecepatan respons", type: "text" },
-            { text: "  • E-LOA Document Processing Cut: -50% pemangkasan durasi", type: "text" },
-            { text: "  • Hackathon Firetech 2025: Juara 3 Regional", type: "text" }
+            { text: "METRIK PERFORMA & PRESTASI:", type: "info" },
+            { text: "  • IPK Akademik: 3.47 / 4.00 (Politeknik Negeri Padang)", type: "text" },
+            { text: "  • Prestasi: Juara 3 Firetech Hackathon 2025 (Regional UNAND)", type: "text" },
+            { text: "  • Efisiensi PBL: +35% Responsivitas API E-Catalog", type: "text" },
+            { text: "  • Otomasi E-LOA: -50% Waktu Verifikasi Berkas Cetak", type: "text" },
+            { text: "  • Kepemimpinan: Kepala Bidang Kominfo HMTI PNP & Medkraf HIVE", type: "text" }
           ];
           break;
         case "contact":
           response = [
-            { text: "INFO KONTAK AKBAR:", type: "info" },
-            { text: "  • Email: akbarhidayatullah.dev@gmail.com (simulasi)", type: "text" },
-            { text: "  • GitHub: github.com/akbar-hidayatullah (simulasi)", type: "text" },
-            { text: "  • LinkedIn: linkedin.com/in/akbar-hidayatullah (simulasi)", type: "text" },
-            { text: "  • Instagram: @akbar_hidayatullah (simulasi)", type: "text" }
+            { text: "SALURAN KOMUNIKASI:", type: "info" },
+            { text: "  • Email: akbarhidayatullah.dev@gmail.com", type: "text" },
+            { text: "  • GitHub: https://github.com/akbar-hidayatullah", type: "text" },
+            { text: "  • LinkedIn: linkedin.com/in/akbar-hidayatullah", type: "text" },
+            { text: "  • Instagram: @akbar_hidytllh", type: "text" }
+          ];
+          break;
+        case "game":
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("open_spider_game"));
+          }
+          response = [
+            { text: "MEMULAI PROTOKOL: STARK COMBAT TRAINING SIMULATOR...", type: "highlight" },
+            { text: "Simulator latihan tembak jaring hologram telah diluncurkan!", type: "info" }
           ];
           break;
         case "clear":
@@ -102,17 +112,16 @@ export default function InteractiveTerminal() {
           setInput("");
           return;
         case "":
-          response = [];
-          break;
+          return;
         default:
           response = [
-            { text: `Perintah '${trimmedInput}' tidak dikenal. Ketik 'help' untuk daftar perintah.`, type: "error" }
+            { text: `Perintah tidak dikenal: '${input}'. Ketik 'help' untuk daftar perintah.`, type: "error" }
           ];
       }
 
       setHistory((prev) => [
         ...prev,
-        { text: `akbar@terminal:~$ ${input}`, type: "command" },
+        { text: `akbar@spider-terminal:~$ ${input}`, type: "command" },
         ...response
       ]);
       setInput("");
@@ -120,21 +129,45 @@ export default function InteractiveTerminal() {
   };
 
   return (
-    <section id="terminal" className="space-y-6">
+    <section id="terminal" className="space-y-4 pt-6 font-tech">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <TerminalIcon className="h-5 w-5 text-brand-purple" />
-          <h3 className="text-xl font-bold text-white font-mono">Interactive Shell</h3>
+          <TerminalIcon className="h-5 w-5 transition-colors duration-300" style={{ color: themeColor }} />
+          <h3 className="font-anybody text-xl font-black italic text-white uppercase">
+            TERMINAL INTERAKTIF // AKBAR OS
+          </h3>
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-slate-500 font-mono">
-          <Sparkles className="h-3.5 w-3.5 text-brand-purple glow-purple animate-pulse" />
-          Live Simulator
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("open_spider_game"));
+              }
+            }}
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-transparent border border-[#2a2e33] text-slate-400 hover:text-white rounded text-[10px] font-bold transition-colors"
+            style={{ "--hover-border": themeColor }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = themeColor;
+              e.currentTarget.style.color = themeColor;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "#2a2e33";
+              e.currentTarget.style.color = "#94a3b8";
+            }}
+          >
+            🎮 EASTER EGG
+          </button>
+          <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-bold">
+            <ShieldAlert className="h-3.5 w-3.5" />
+            ONLINE
+          </div>
         </div>
       </div>
 
       <div
         onClick={focusInput}
-        className="terminal-screen h-80 w-full rounded-2xl border border-white/10 p-6 font-mono text-xs overflow-y-auto cursor-text shadow-2xl relative"
+        className="bg-[#121414] border-2 border-[#2a2e33] h-72 w-full p-5 text-xs overflow-y-auto cursor-text relative shadow-2xl rounded-xl"
       >
         <div className="space-y-2">
           {history.map((line, idx) => (
@@ -142,17 +175,18 @@ export default function InteractiveTerminal() {
               key={idx}
               className={`leading-relaxed whitespace-pre-wrap ${
                 line.type === "command"
-                  ? "text-brand-purple-light font-bold"
+                  ? "font-bold"
                   : line.type === "system"
                   ? "text-slate-500"
+                  : line.type === "highlight"
+                  ? "text-amber-400 font-bold bg-amber-400/10 px-1 py-0.5 rounded"
                   : line.type === "info"
-                  ? "text-brand-cyan font-bold"
+                  ? "text-white font-bold"
                   : line.type === "error"
-                  ? "text-red-400 font-medium"
-                  : line.type === "muted"
-                  ? "text-slate-400 pl-4"
+                  ? "text-red-400 font-bold"
                   : "text-slate-300"
               }`}
+              style={line.type === "command" ? { color: themeColor } : {}}
             >
               {line.text}
             </div>
@@ -161,16 +195,18 @@ export default function InteractiveTerminal() {
         </div>
 
         {/* Input prompt */}
-        <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/5 relative z-10">
-          <span className="text-brand-purple font-bold">akbar@terminal:~$</span>
+        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-[#2a2e33]">
+          <span className="font-bold transition-colors duration-300" style={{ color: themeColor }}>
+            akbar@spider-terminal:~$
+          </span>
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleCommand}
-            className="flex-1 bg-transparent border-none outline-none text-white font-mono text-xs p-0 focus:ring-0"
-            placeholder="Ketik perintah..."
+            className="flex-1 bg-transparent border-none outline-none text-white font-tech text-xs p-0 focus:ring-0"
+            placeholder="Ketik perintah (contoh: help, about, skills, projects)..."
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"

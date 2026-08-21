@@ -1,29 +1,70 @@
-import { Plus_Jakarta_Sans, Fira_Code } from "next/font/google";
+import { Anybody, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const anybody = Anybody({
+  variable: "--font-anybody",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
 });
 
-const firaCode = Fira_Code({
-  variable: "--font-fira-code",
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata = {
-  title: "Akbar Hidayatullah | Full-Stack Developer & Creative Visual Director",
-  description: "Portofolio Profesional Akbar Hidayatullah - Mahasiswa D4 Teknologi Rekayasa Perangkat Lunak Politeknik Negeri Padang. Pengembang Aplikasi Web & Mobile & Kreator Komunikasi Visual.",
-  keywords: ["Akbar Hidayatullah", "Full-Stack Developer", "Politeknik Negeri Padang", "Portofolio IT", "Laravel", "Next.js", "Express.js", "Flutter", "Fotografi", "Videografi", "Padang"],
-  authors: [{ name: "Akbar Hidayatullah" }],
+  metadataBase: new URL("https://akbar-hidayatullah.dev"),
+  title: "Spectacular Spider-Portfolio | Akbar Hidayatullah",
+  description: "Portofolio interaktif berkinerja tinggi bertema Spectacular Spider-Man & Stark HUD. Mahasiswa TRPL Politeknik Negeri Padang, Full-Stack Developer & Creative Visual Director.",
+  keywords: [
+    "Akbar Hidayatullah",
+    "Spider-Portfolio",
+    "Full-Stack Developer",
+    "Politeknik Negeri Padang",
+    "TRPL PNP",
+    "Next.js Developer",
+    "Laravel Developer",
+    "React",
+    "Web Developer Padang",
+    "Fotografer Padang",
+  ],
+  authors: [{ name: "Akbar Hidayatullah", url: "https://github.com/akbar-hidayatullah" }],
+  creator: "Akbar Hidayatullah",
+  openGraph: {
+    title: "Akbar Hidayatullah | Spectacular Spider-Portfolio",
+    description: "Full-Stack Developer & Creative Visual Director. Jelajahi proyek rekayasa perangkat lunak, keahlian teknologi, dan galeri visual.",
+    url: "https://akbar-hidayatullah.dev",
+    siteName: "Akbar Hidayatullah Spider-Portfolio",
+    images: [
+      {
+        url: "/logo%20spider.png",
+        width: 800,
+        height: 800,
+        alt: "Spider-Man Emblem Akbar Hidayatullah",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Akbar Hidayatullah | Spectacular Spider-Portfolio",
+    description: "Full-Stack Developer & Mahasiswa TRPL Politeknik Negeri Padang. Interaktif, responsif, dan bertenaga.",
+    images: ["/logo%20spider.png"],
+  },
+  icons: {
+    icon: "/logo%20spider.png",
+    apple: "/logo%20spider.png",
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${plusJakarta.variable} ${firaCode.variable} scroll-smooth`}>
-      <body className="bg-brand-black text-slate-200 antialiased min-h-screen flex flex-col selection:bg-brand-purple selection:text-white">
+    <html lang="id" className={`${anybody.variable} ${spaceMono.variable} scroll-smooth`}>
+      <body className="bg-[#121414] text-slate-200 antialiased min-h-screen flex flex-col selection:bg-[#e6192e] selection:text-white font-sans">
         {children}
       </body>
     </html>

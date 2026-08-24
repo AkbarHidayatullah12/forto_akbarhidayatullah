@@ -31,7 +31,7 @@ export const metadata = {
     "Web Developer Padang",
     "Fotografer Padang",
   ],
-  authors: [{ name: "Akbar Hidayatullah", url: "https://github.com/akbar-hidayatullah" }],
+  authors: [{ name: "Akbar Hidayatullah", url: "https://github.com/AkbarHidayatullah12" }],
   creator: "Akbar Hidayatullah",
   openGraph: {
     title: "Akbar Hidayatullah | Spectacular Spider-Portfolio",

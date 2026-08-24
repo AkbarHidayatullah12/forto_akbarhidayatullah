@@ -39,7 +39,7 @@ export default function Footer() {
           {/* Social Links & Back to Top — Theme Reactive */}
           <div className="flex items-center gap-8 font-tech text-xs font-bold">
             <a
-              href="https://github.com/akbar-hidayatullah"
+              href="https://github.com/AkbarHidayatullah12"
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-300 transition-colors"
@@ -49,7 +49,7 @@ export default function Footer() {
               GITHUB
             </a>
             <a
-              href="https://linkedin.com/in/akbar-hidayatullah"
+              href="https://www.linkedin.com/in/akbar-hidayatullah-570212376/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-300 transition-colors"

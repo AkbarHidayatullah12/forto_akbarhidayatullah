@@ -92,9 +92,9 @@ export default function InteractiveTerminal() {
         case "contact":
           response = [
             { text: "SALURAN KOMUNIKASI:", type: "info" },
-            { text: "  • Email: akbarhidayatullah.dev@gmail.com", type: "text" },
-            { text: "  • GitHub: https://github.com/akbar-hidayatullah", type: "text" },
-            { text: "  • LinkedIn: linkedin.com/in/akbar-hidayatullah", type: "text" },
+            { text: "  • Email: akbar281804@gmail.com", type: "text" },
+            { text: "  • GitHub: https://github.com/AkbarHidayatullah12", type: "text" },
+            { text: "  • LinkedIn: https://www.linkedin.com/in/akbar-hidayatullah-570212376/", type: "text" },
             { text: "  • Instagram: @akbar_hidytllh", type: "text" }
           ];
           break;

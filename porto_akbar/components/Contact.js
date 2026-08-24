@@ -26,9 +26,9 @@ export default function Contact() {
   };
 
   const commChannels = [
-    { name: "ALAMAT EMAIL", val: "akbarhidayatullah.dev@gmail.com", href: "mailto:akbarhidayatullah.dev@gmail.com", icon: Mail },
-    { name: "GITHUB REPOSITORI", val: "github.com/akbar-hidayatullah", href: "https://github.com/akbar-hidayatullah", icon: Github },
-    { name: "LINKEDIN PROFIL", val: "linkedin.com/in/akbar-hidayatullah", href: "https://linkedin.com", icon: Linkedin },
+    { name: "ALAMAT EMAIL", val: "akbar281804@gmail.com", href: "mailto:akbar281804@gmail.com", icon: Mail },
+    { name: "GITHUB REPOSITORI", val: "github.com/AkbarHidayatullah12", href: "https://github.com/AkbarHidayatullah12", icon: Github },
+    { name: "LINKEDIN PROFIL", val: "linkedin.com/in/akbar-hidayatullah-570212376/", href: "https://www.linkedin.com/in/akbar-hidayatullah-570212376/", icon: Linkedin },
     { name: "INSTAGRAM MEDIA", val: "@akbar_hidytllh", href: "https://www.instagram.com/akbar_hidytllh/", icon: Instagram },
   ];
 

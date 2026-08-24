@@ -63,8 +63,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${anybody.variable} ${spaceMono.variable} scroll-smooth`}>
-      <body className="bg-[#121414] text-slate-200 antialiased min-h-screen flex flex-col selection:bg-[#e6192e] selection:text-white font-sans">
+    <html lang="id" className={`${anybody.variable} ${spaceMono.variable} scroll-smooth`} suppressHydrationWarning>
+      <body className="bg-[#121414] text-slate-200 antialiased min-h-screen flex flex-col selection:bg-[#e6192e] selection:text-white font-sans" suppressHydrationWarning>
         {children}
       </body>
     </html>

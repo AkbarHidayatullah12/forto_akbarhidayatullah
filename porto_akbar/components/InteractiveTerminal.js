@@ -55,7 +55,7 @@ export default function InteractiveTerminal() {
             { text: "BIODATA OPERATIF:", type: "info" },
             { text: "  Nama: Akbar Hidayatullah", type: "text" },
             { text: "  Posisi: Full-Stack Developer & Creative Visual Director", type: "text" },
-            { text: "  Pendidikan: Mahasiswa Semester 7 D4 TRPL Politeknik Negeri Padang (IPK 3,47)", type: "text" },
+            { text: "  Pendidikan: Mahasiswa Semester 7 D4 TRPL Politeknik Negeri Padang (IPK 3,51)", type: "text" },
             { text: "  Dedikasi: Merancang sistem backend efisien, aplikasi full-stack modern, serta memadukan logika software dengan komunikasi visual.", type: "text" }
           ];
           break;

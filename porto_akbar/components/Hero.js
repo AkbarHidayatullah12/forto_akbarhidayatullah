@@ -162,7 +162,7 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed font-sans"
             >
-              Mahasiswa semester 7 Teknologi Rekayasa Perangkat Lunak di Politeknik Negeri Padang dengan IPK 3,47. Berdedikasi merancang arsitektur backend optimal, sistem web & mobile full-stack mutakhir, serta memadukan logika rekayasa perangkat lunak dengan keahlian fotografi & komunikasi visual.
+              Mahasiswa semester 7 Teknologi Rekayasa Perangkat Lunak di Politeknik Negeri Padang dengan IPK 3,51. Berdedikasi merancang arsitektur backend optimal, sistem web & mobile full-stack mutakhir, serta memadukan logika rekayasa perangkat lunak dengan keahlian fotografi & komunikasi visual.
             </motion.p>
 
             {/* CTA Buttons */}

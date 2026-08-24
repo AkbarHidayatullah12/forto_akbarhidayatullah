@@ -30,7 +30,7 @@ export default function Timeline() {
       year: "2023 - SEKARANG",
       title: "D4 Teknologi Rekayasa Perangkat Lunak",
       org: "Politeknik Negeri Padang (IPK 3.47)",
-      desc: "Mahasiswa Semester 7 dengan IPK 3,47. Mempelajari rekayasa kebutuhan perangkat lunak, arsitektur database, desain API, pemrograman framework web dan mobile.",
+      desc: "Mahasiswa Semester 7 dengan IPK 3,51. Mempelajari rekayasa kebutuhan perangkat lunak, arsitektur database, desain API, pemrograman framework web dan mobile.",
       tag: "PENDIDIKAN",
       icon: GraduationCap,
     },

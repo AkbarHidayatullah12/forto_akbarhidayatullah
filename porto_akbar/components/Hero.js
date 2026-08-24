@@ -117,7 +117,7 @@ export default function Hero() {
                     <Wifi className="h-3 w-3" /> ONLINE
                   </span>
                   <span className="text-slate-500 text-[10px]">•</span>
-                  <span className="font-tech text-[11px] text-slate-400">IPK 3.47 // TRPL PNP</span>
+                  <span className="font-tech text-[11px] text-slate-400">IPK 3.51 // TRPL PNP</span>
                 </div>
                 <h2 className="font-tech text-xs sm:text-sm font-bold tracking-widest text-slate-400 uppercase">
                   HALO, SAYA AKBAR HIDAYATULLAH
@@ -225,7 +225,7 @@ export default function Hero() {
                 className="absolute -top-3 left-1/2 -translate-x-1/2 font-tech text-[10px] font-bold bg-[#0d0f10] px-2 border transition-colors duration-300"
                 style={{ color: themeColor, borderColor: `${themeColor}44` }}
               >
-                IPK: 3.47 // TRPL
+                IPK:3.51 // TRPL
               </div>
               <div
                 className="absolute -bottom-3 left-1/2 -translate-x-1/2 font-tech text-[10px] font-bold bg-[#0d0f10] px-2 border transition-colors duration-300"

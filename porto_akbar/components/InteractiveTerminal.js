@@ -82,7 +82,7 @@ export default function InteractiveTerminal() {
         case "stats":
           response = [
             { text: "METRIK PERFORMA & PRESTASI:", type: "info" },
-            { text: "  • IPK Akademik: 3.47 / 4.00 (Politeknik Negeri Padang)", type: "text" },
+            { text: "  • IPK Akademik: 3.51 / 4.00 (Politeknik Negeri Padang)", type: "text" },
             { text: "  • Prestasi: Juara 3 Firetech Hackathon 2025 (Regional UNAND)", type: "text" },
             { text: "  • Efisiensi PBL: +35% Responsivitas API E-Catalog", type: "text" },
             { text: "  • Otomasi E-LOA: -50% Waktu Verifikasi Berkas Cetak", type: "text" },

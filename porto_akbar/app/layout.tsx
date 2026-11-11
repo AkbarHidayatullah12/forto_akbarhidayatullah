@@ -22,10 +22,7 @@ export const metadata: Metadata = {
 	description:
 		'Portfolio of Akbar Hidayatullah: D4 Software Engineering student at Politeknik Negeri Padang, Backend Architect, Full-Stack Developer, and Creative Visual Director.',
 	icons: {
-		icon: [
-			{ url: '/icon.svg', type: 'image/svg+xml' }
-		],
-		apple: '/icon.svg'
+		icon: '/icon.svg'
 	}
 }
 

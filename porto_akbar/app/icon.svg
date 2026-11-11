@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="silverGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="60%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#94a3b8" />
+    </linearGradient>
+    <linearGradient id="borderGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.4)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0.05)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Dark Museum Aesthetic Background -->
+  <rect width="64" height="64" rx="16" fill="#090a0f" />
+  <rect width="62" height="62" x="1" y="1" rx="15" fill="none" stroke="url(#borderGlow)" stroke-width="1.5" />
+
+  <!-- Classical Roman / Renaissance Serif Letter 'A' -->
+  <g fill="url(#silverGlow)">
+    <path d="
+      M 32,10
+      L 34.5,10
+      L 48,46
+      L 52,46
+      L 52,49
+      L 41,49
+      L 41,46
+      L 44.5,46
+      L 40.5,35
+      L 23.5,35
+      L 19.5,46
+      L 23,46
+      L 23,49
+      L 12,49
+      L 12,46
+      L 16,46
+      L 29.5,10
+      Z
+      M 32,16
+      L 24.8,32
+      L 39.2,32
+      Z
+    " />
+  </g>
+</svg>

@@ -20,7 +20,13 @@ const cera = localFont({
 export const metadata: Metadata = {
 	title: 'Akbar Hidayatullah — Full-Stack Developer & Creative Visual Director',
 	description:
-		'Portfolio of Akbar Hidayatullah: D4 Software Engineering student at Politeknik Negeri Padang, Backend Architect, Full-Stack Developer, and Creative Visual Director.'
+		'Portfolio of Akbar Hidayatullah: D4 Software Engineering student at Politeknik Negeri Padang, Backend Architect, Full-Stack Developer, and Creative Visual Director.',
+	icons: {
+		icon: [
+			{ url: '/icon.svg', type: 'image/svg+xml' }
+		],
+		apple: '/icon.svg'
+	}
 }
 
 export default function RootLayout({

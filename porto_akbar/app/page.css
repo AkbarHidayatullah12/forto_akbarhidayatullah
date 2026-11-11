@@ -1,0 +1,9 @@
+@media (min-width: 768px) {
+	:root {
+		scroll-snap-type: y mandatory;
+	}
+}
+
+next-route-announcer {
+	position: fixed !important;
+}
